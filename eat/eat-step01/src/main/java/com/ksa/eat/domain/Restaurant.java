@@ -21,7 +21,7 @@ public class Restaurant {
     }
 
     public String getName() {
-        return "Bob zip";
+        return name;
     }
 
     public String getInformation() {
@@ -31,5 +31,5 @@ public class Restaurant {
     public Object getAddress() {
         return address;
     }
-    
+
 }
