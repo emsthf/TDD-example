@@ -35,6 +35,16 @@ public class RestaurantController {
         return restaurant;
     }
 
+    @GetMapping("/api/test")
+    public String test() {
+        return "test api return result!!!";
+    }
+
+    @GetMapping("/api/test2")
+    public String test2() {
+        return "test2 api return result@@@";
+    }
+
     // @GetMapping("/restaurants")
     // public List<Restaurant> list() {
     //     // 아래 두줄은 컨트롤러에 대한 기능만 잘 돌아가는지 테스트. 서비스를 테스트하고 싶으면 아래 두줄을 서비스에 대한 코드로 바꿔주면 된다
