@@ -9,9 +9,11 @@ import com.ksa.eat.domain.Restaurant;
 
 import com.ksa.eat.domain.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,9 +25,21 @@ public class RestaurantController {
 
 
     @GetMapping("/api/findAll")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<MemberEntity> findAllMembers() {
         // MemberEntity entity = new MemberEntity.builder().username("ddd").name("ssss").build();
         return memberRepository.findAll();
+    }
+
+    @PostMapping("/api/add")
+    public void test3() {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity = memberRepository.save(MemberEntity.builder()
+                .pid(null)
+                .username("sssss")
+                .name("nnnnnnn")
+                .build()
+        );
     }
 
 
@@ -48,15 +62,23 @@ public class RestaurantController {
     }
 
     @GetMapping("/api/test")
-    public String test() {
-        return "test api return result!!!";
+    public List<MemberEntity> test() {
+        return memberRepository.findAll();
     }
 
     @GetMapping("/api/test2")
     public String test2() {
-        return "test2 api return result@@@";
+        return "test2 api return result@@@ " + getClientIP();
     }
 
+    public String getClientIP() {
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String ip = req.getHeader("X-FORWARDED-FOR");
+        if(ip ==null) {
+            ip = req.getRemoteAddr();
+        }
+        return ip;
+    }
     // @GetMapping("/restaurants")
     // public List<Restaurant> list() {
     //     // 아래 두줄은 컨트롤러에 대한 기능만 잘 돌아가는지 테스트. 서비스를 테스트하고 싶으면 아래 두줄을 서비스에 대한 코드로 바꿔주면 된다
